@@ -50,6 +50,13 @@ button {
   color: black;
 }
 
-button+button {
-  margin-left: 5px;
+button:hover {
+  background-color: #004ea2;
+  color: white;
+}
+
+.clear-database-button {
+  background-color: #a52017;
+  border: 1px solid #7d0202;
+  color: white;
 }

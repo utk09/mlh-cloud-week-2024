@@ -13,7 +13,9 @@ const ClearDatabase = ({ fetchBooks }) => {
 
   return (
     <div className="clear-database-container">
-      <button onClick={handleClearDatabase}>Delete Database</button>
+      <button className="clear-database-button" onClick={handleClearDatabase}>
+        Delete Database
+      </button>
     </div>
   );
 };
