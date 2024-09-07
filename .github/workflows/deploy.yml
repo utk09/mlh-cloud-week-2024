@@ -3,7 +3,7 @@ name: Deploy to OVH
 on:
   push:
     branches:
-      - main  # Triggers the workflow on pushes to the main branch
+      - main # Triggers the workflow on pushes to the main branch
 
 jobs:
   build:
@@ -16,7 +16,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '20'
+          node-version: "20"
 
       - name: Install dependencies
         run: |
@@ -38,5 +38,6 @@ jobs:
           echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
           ssh-keyscan -H 51.89.228.199 >> ~/.ssh/known_hosts
+          ssh ubuntu@51.89.228.199 "mkdir -p /home/ubuntu/temp"  # Create temp directory
           scp -r frontend/dist/* ubuntu@51.89.228.199:/home/ubuntu/temp/
           ssh ubuntu@51.89.228.199 "sudo cp -R /home/ubuntu/temp/* /var/www/html/ && sudo rm -rf /home/ubuntu/temp"
