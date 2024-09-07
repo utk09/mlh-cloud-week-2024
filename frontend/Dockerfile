@@ -28,5 +28,11 @@ COPY nginx.conf /etc/nginx/conf.d/default.conf
 # Expose port 80
 EXPOSE 80
 
+# Debug: List files in the Nginx HTML directory
+RUN ls -l /usr/share/nginx/html
+
+# Debug: Print Nginx config file content
+RUN cat /etc/nginx/conf.d/default.conf
+
 # Start Nginx server
 CMD ["nginx", "-g", "daemon off;"]
