@@ -38,6 +38,5 @@ jobs:
           echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
           ssh-keyscan -H 51.89.228.199 >> ~/.ssh/known_hosts
-          scp -r frontend/dist/* ubuntu@51.89.228.199:/var/www/html/
-          scp -r backend/* ubuntu@51.89.228.199:~/mlh-cloud-week-2024/backend/
-          ssh ubuntu@51.89.228.199 "cd ~/mlh-cloud-week-2024/backend && npm install && pm2 restart backend"
+          scp -r frontend/dist/* ubuntu@51.89.228.199:/home/ubuntu/temp/
+          ssh ubuntu@51.89.228.199 "sudo cp -R /home/ubuntu/temp/* /var/www/html/ && sudo rm -rf /home/ubuntu/temp"
