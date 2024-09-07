@@ -45,6 +45,9 @@ input {
 button {
   padding: 5px 10px;
   cursor: pointer;
+  background-color: #83bdfa;
+  border: 1px solid #4297f2;
+  color: black;
 }
 
 button+button {

@@ -1,0 +1,43 @@
+name: Deploy to OVH
+
+on:
+  push:
+    branches:
+      - main  # Triggers the workflow on pushes to the main branch
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out the repository
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        run: |
+          cd backend
+          npm install
+          cd ../frontend
+          npm install
+
+      - name: Build frontend
+        run: |
+          cd frontend
+          npm run build
+
+      - name: Deploy to OVH Server
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.OVH_SSH_KEY }}
+        run: |
+          mkdir -p ~/.ssh
+          echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan -H 51.89.228.199 >> ~/.ssh/known_hosts
+          scp -r frontend/dist/* ubuntu@51.89.228.199:/var/www/html/
+          scp -r backend/* ubuntu@51.89.228.199:~/mlh-cloud-week-2024/backend/
+          ssh ubuntu@51.89.228.199 "cd ~/mlh-cloud-week-2024/backend && npm install && pm2 restart backend"
